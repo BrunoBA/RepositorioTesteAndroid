@@ -16,6 +16,7 @@ import com.google.android.gms.awareness.state.Weather;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.awareness.Awareness;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.ActivityRecognition;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -27,8 +28,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private GoogleApiClient mClient;
-
-
+    private Toast t;
+    private Context context = getApplicationContext();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -42,6 +43,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addApi(Awareness.API)
+                .addApi(ActivityRecognition.API)
                 .build();
         mClient.connect();
 
@@ -61,63 +63,49 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-8.14049705, -34.90979254);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng casaDoCriador = new LatLng(-8.14049705, -34.90979254);
+        mMap.addMarker(new MarkerOptions().position(casaDoCriador).title("Você está aqui!"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(casaDoCriador));
+
     }
+
+
+    public void onRequestPermissionsResult(){
+
+    }
+
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         Log.i("teste", "Conected on API Awareness!");
 
-
-        Context context = getApplicationContext();
-        CharSequence text = "Ta pegando...";
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+//      ESSA PARTE DO CÓDIGO FOI INTERROMPIDA POR CONTA DAS PERMISSOES POSTAS MANUALMENTE NO APLICATIVO!!!!
 
 
-        Toast t = Toast.makeText(context, text, duration);
 
-        if (mClient.isConnected()) {
-            t = Toast.makeText(context, "Conectado", Toast.LENGTH_SHORT);
-        } else {
-            t = Toast.makeText(context, "Desconectado", Toast.LENGTH_SHORT);
-        }
-        t.show();
-
-        dsfs
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            //TESTA SE O USUÁRIO TEM PERMISSÃO PARA ACESSAR A LOCALIZAÇÃO
+//
+//            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION){
+//                t.makeText(context,"É preciso dar permissões para esse aplicativo funcionar perfeitamente",Toast.LENGTH_LONG);
+//                t.show();
+//            }else{
+//
+//                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION,0});
+//            }
+//
+//        }else{
 
             Awareness.SnapshotApi.getWeather(mClient)
                     .setResultCallback(new ResultCallback<WeatherResult>() {
                         @Override
                         public void onResult(@NonNull WeatherResult weatherResult) {
 
-                            Log.e("teste", String.valueOf(weatherResult.getStatus().toString()));
+                            Log.i("teste", String.valueOf(weatherResult.getWeather().getTemperature(Weather.CELSIUS)));
 
                         }
                     });
-
-
-            return;
-        }
-
-
-
-
+//        }
 
     }
 
