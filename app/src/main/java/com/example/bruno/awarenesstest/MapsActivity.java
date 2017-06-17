@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -68,13 +69,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng casaDoCriador = new LatLng(-8.14049705, -34.90979254);
         LatLng unicap = new LatLng(-8.05557534,-34.88822222);
 
+
+        if (ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    12345
+            );
+        }
+
         mMap.setMyLocationEnabled(true);
 
         mMap.addMarker(new MarkerOptions().position(casaDoCriador).title(textHole));
         mMap.addMarker(new MarkerOptions().position(unicap).title(textHole));
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(casaDoCriador));
-        
-
 
     }
 
@@ -88,22 +99,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onConnected(@Nullable Bundle bundle) {
         Log.i("teste", "Conected on API Awareness!");
 
-//      ESSA PARTE DO CÓDIGO FOI INTERROMPIDA POR CONTA DAS PERMISSOES POSTAS MANUALMENTE NO APLICATIVO!!!!
-
-
-
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            //TESTA SE O USUÁRIO TEM PERMISSÃO PARA ACESSAR A LOCALIZAÇÃO
-//
-//            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION){
-//                t.makeText(context,"É preciso dar permissões para esse aplicativo funcionar perfeitamente",Toast.LENGTH_LONG);
-//                t.show();
-//            }else{
-//
-//                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION,0});
-//            }
-//
-//        }else{
+        if (ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    12345
+            );
+        }
 
             Awareness.SnapshotApi.getWeather(mClient)
                     .setResultCallback(new ResultCallback<WeatherResult>() {
