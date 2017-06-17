@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AwarenessTest</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="google_maps_key">AIzaSyBTqFU3u9qG7q_KLoubWFtcuoI2zCczI44</string>
+    <string name="awareness_key">AIzaSyDqtgGoQ-gX3gkOjdMs9zANI4ppHuV3VhU</string>
+
+</resources>

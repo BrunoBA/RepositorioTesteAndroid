@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/Users/bruno/.android/build-cache/f3196f6b506b3f6ef747f50f2e2bca30a4bef5fb/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="/Users/bruno/AndroidStudioProjects/AwarenessTest/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_d4f47e699a76bf20c5cd1bf8f5c83366e05a52e4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/bruno/.android/build-cache/d1694aff26b7da6d31c6ddaebb979dfb49fa8304/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="/Users/bruno/AndroidStudioProjects/AwarenessTest/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_33b7224da2159b47ebb6d86170d5e33566d17ac5/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/bruno/AndroidStudioProjects/AwarenessTest/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="/Users/bruno/AndroidStudioProjects/AwarenessTest/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_673de076eaee080cf69e5b557fed87275f3d1bc2/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/bruno/.android/build-cache/b13c48d29de56e16a9c4b6b10098782c203421e2/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
+        <dex dex="/Users/bruno/AndroidStudioProjects/AwarenessTest/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_8029f6553944c524921e432398d50b02a279cf29/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/bruno/.android/build-cache/8c5b357266c27b10962177cdbcd112360e3d4afa/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/bruno/AndroidStudioProjects/AwarenessTest/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_d643940c9a6bd41e45de743b74d81dd8d47a337c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/bruno/.android/build-cache/d4f950cac4067b215e8fa18fa4ed2db39209b87f/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="/Users/bruno/AndroidStudioProjects/AwarenessTest/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_2221d3bc194ab668a4b0b6e10afd603d065126bf/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/bruno/.android/build-cache/0d74a6724d5634d5c51526e3fb0ff01284e91e76/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="/Users/bruno/AndroidStudioProjects/AwarenessTest/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_62e87f9e76a1848c8a4d134be89408b33f15d552/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/bruno/.android/build-cache/52b362fcb0ec633dc09df619c39ea1cb5d5c94d7/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="9ed08fab37c3a572da1d9ed2bf2e36c8d3e2bc48">
+        <dex dex="/Users/bruno/AndroidStudioProjects/AwarenessTest/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_87265e1f804637f275974c7cf674bd056d541519/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/bruno/.android/build-cache/83d9993ccd5b88e6cc284ab4eb00d8f63c47f098/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="6c8a4af7cf76d958c76ed7682f39e4b386b69305">
+        <dex dex="/Users/bruno/AndroidStudioProjects/AwarenessTest/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_918c9db87fee9a3e3bf709bc8ee38ced6731f282/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/bruno/.android/build-cache/78c75af044119ccd323db927c40c17322aa18a7e/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="/Users/bruno/AndroidStudioProjects/AwarenessTest/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_6c235ef8f87a881ca797fd4252e00c4cf0ca4d4e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/bruno/.android/build-cache/59b4629fad1f3a006c811c895645d986815b513d/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="dd1d0d84da2cff18f741c63a9c3af7d9aa89fdd6">
+        <dex dex="/Users/bruno/AndroidStudioProjects/AwarenessTest/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_51097644f1fc6a3600a99359004aa5f33f187b4d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/bruno/.android/build-cache/cb0106275901b0586af010333ecacdd92861862e/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="5803db663655ef5cb38c6bcb17ba326fdb9edfbd">
+        <dex dex="/Users/bruno/AndroidStudioProjects/AwarenessTest/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_5a9df72704a5e8352fdc372eda75dd625ccd9f80/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/bruno/.android/build-cache/3d60fea19050b848fb181d6e98f6dfa42658ffd0/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="/Users/bruno/AndroidStudioProjects/AwarenessTest/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_2618ab9d2ba9f5a2f24b7c2c4f1c5442ee711b3e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/bruno/AndroidStudioProjects/AwarenessTest/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="6d2f0b4c037a49a24639bdeda4514025e11eb546">
+        <dex dex="/Users/bruno/AndroidStudioProjects/AwarenessTest/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_ed49dd8449ac7e2382e1f225cbb15461f9cd9d84/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/bruno/.android/build-cache/933c54051851fad6205ab736c1097c6a94cbbea0/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="7e0f082141b7aa90aab5d3a47ab09b0edc958f6b">
+        <dex dex="/Users/bruno/AndroidStudioProjects/AwarenessTest/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_679b259f05c2f8b5de65168eaeb15d477a82f840/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/bruno/.android/build-cache/27016d3cc5ec3b19223a0e092188c13c40e5e0ec/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="/Users/bruno/AndroidStudioProjects/AwarenessTest/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_97f3a25d22b5010a9806f3633e1ad5e5b2ac00d5/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/bruno/.android/build-cache/bd9a0fcb2f5c4cf07aaa12c60196b99756779de6/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="6d0d5e86f5b7203834df01ed78ebfdd5cbf74d48">
+        <dex dex="/Users/bruno/AndroidStudioProjects/AwarenessTest/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_8d6b4e3bb94447100a661a9e1d108d6f9fedd835/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/bruno/.android/build-cache/2de8ea63d5d1708cc15a760e307031e02e890c08/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="32aa1b2a2f68f455403d10d41d8ded37c9812f11">
+        <dex dex="/Users/bruno/AndroidStudioProjects/AwarenessTest/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_042bbc553d4f96933fac7aae7fdc6ff98da4122e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/bruno/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.3.1/support-annotations-25.3.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="/Users/bruno/AndroidStudioProjects/AwarenessTest/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-25.3.1_3e0b1ffaa0e2e1e28d24692a59eca4f36e8b3957/classes.dex" />
+    </item>
+
+</items>
