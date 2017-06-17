@@ -72,7 +72,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.addMarker(new MarkerOptions().position(casaDoCriador).title(textHole));
         mMap.addMarker(new MarkerOptions().position(unicap).title(textHole));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(casaDoCriador));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(casaDoCriador));
+        
+
 
     }
 
