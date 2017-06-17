@@ -28,8 +28,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private GoogleApiClient mClient;
-    private Toast t;
-    private Context context = getApplicationContext();
+//    private Toast t;
+//    private Context context = getApplicationContext();
+    private static String textHole = "Cuidado com o buraco!";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -64,7 +66,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         LatLng casaDoCriador = new LatLng(-8.14049705, -34.90979254);
-        mMap.addMarker(new MarkerOptions().position(casaDoCriador).title("Você está aqui!"));
+        LatLng unicap = new LatLng(-8.05557534,-34.88822222);
+
+        mMap.setMyLocationEnabled(true);
+
+        mMap.addMarker(new MarkerOptions().position(casaDoCriador).title(textHole));
+        mMap.addMarker(new MarkerOptions().position(unicap).title(textHole));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(casaDoCriador));
 
     }
