@@ -1,6 +1,7 @@
 package com.example.bruno.awarenesstest;
 
 import android.Manifest;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
@@ -37,11 +38,11 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,SensorEventListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, SensorEventListener {
 
     private GoogleMap mMap;
     private GoogleApiClient mClient;
-//    private Toast t;
+    //    private Toast t;
 //    private Context context = getApplicationContext();
     private static String textHole = "Cuidado com o buraco!";
     private static final int TIPO_SENSOR = Sensor.TYPE_ACCELEROMETER;
@@ -53,6 +54,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static double MAX_SENSOR_Z = 12;
     private static int atividade = DetectedActivity.UNKNOWN; // INICIALIZA COM O PADRAO INDEFINIDO
     private static String TAG = "Awareness";
+    private static final String FENCE_RECEIVER_ACTION = "FENCE_RECEIVE";
+//    private HeadphoneFenceBroadcastReceiver fenceReceiver;
+//    private PendingIntent mFencePendingIntent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +72,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(TIPO_SENSOR);
 
-        sensorManager.registerListener(this,sensor,SensorManager.SENSOR_DELAY_NORMAL);
-
-        Log.i("teste",sensor.toString());
-
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
 
         mClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -79,6 +81,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .build();
         mClient.connect();
 
+        Log.i(TAG, "onCreate");
     }
 
     @Override
@@ -86,34 +89,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         LatLng casaDoCriador = new LatLng(-8.14049705, -34.90979254);
-        LatLng unicap = new LatLng(-8.05557534,-34.88822222);
+        LatLng unicap = new LatLng(-8.05557534, -34.88822222);
 //        LatLng lugar = new LatLng(-8.153492,-34.92);
 
-        if (ContextCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    this,
-                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                    12345
-            );
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
         }
-
         mMap.setMyLocationEnabled(true);
         mMap.addMarker(new MarkerOptions().position(casaDoCriador).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
         mMap.addMarker(new MarkerOptions().position(unicap).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
 
-
 //        mMap.addMarker(new MarkerOptions().position(lugar).title("Aqui o lugar misterioso!"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(casaDoCriador));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(casaDoCriador));
 
     }
 
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        Log.i("teste", "Conected on API Awareness!");
+        Log.i(TAG, "Conected on API Awareness!");
 
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -125,18 +126,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     12345
             );
         }
-
-            Awareness.SnapshotApi.getWeather(mClient)
-                    .setResultCallback(new ResultCallback<WeatherResult>() {
-                        @Override
-                        public void onResult(@NonNull WeatherResult weatherResult) {
-
-                            Log.i("teste", String.valueOf(weatherResult.getWeather().getTemperature(Weather.CELSIUS)));
-
-                        }
-                    });
-//        }
-
     }
 
     @Override
@@ -172,10 +161,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         public void onResult(@NonNull DetectedActivityResult detectedActivityResult) {
                             if (!detectedActivityResult.getStatus().isSuccess()) {
                                 Log.e(TAG, "Could not get the current activity.");
-                                return;
+                            }else{
+                                ActivityRecognitionResult ar = detectedActivityResult.getActivityRecognitionResult();
+                                atividade = ar.getMostProbableActivity().getType();
                             }
-                            ActivityRecognitionResult ar = detectedActivityResult.getActivityRecognitionResult();
-                            atividade = ar.getMostProbableActivity().getType();
                         }
                     });
 
@@ -190,13 +179,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 Log.e(TAG, "Could not get location.");
                                 return;
                             }
+
+
                             else if(atividade == DetectedActivity.IN_VEHICLE){
 
                                 CharSequence text = "Buraco!";
                                 Toast t = Toast.makeText( getApplicationContext(), text, Toast.LENGTH_SHORT);
                                 t.show();
 
-                                Log.i("teste","Buraco detectado!");
+                                Log.i(TAG,"Buraco detectado!");
                                 Location location = locationResult.getLocation();
                                 Log.i(TAG, String.valueOf(atividade));
                                 Log.i(TAG, "Lat: " + location.getLatitude() + ", Lon: " + location.getLongitude());
