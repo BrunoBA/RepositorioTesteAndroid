@@ -86,6 +86,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .build();
         mClient.connect();
 
+        //Inicializar valores dos buracos via banco de dados
         holes.add(new LatLng(-8.191051, -34.921126));
 
         Log.i(TAG, "onCreate");
@@ -110,9 +111,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMyLocationEnabled(true);
 
         //MARCANDO LOCAIS INDICADOS COM BURACOS
-        for (int i = 0; i < holes.size(); i++ ){
-            initHole(holes.get(i));
-        }
+        initHole(holes);
 
         mMap.addMarker(new MarkerOptions().position(casaDoCriador).
                 icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
@@ -152,9 +151,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         float sensorY = event.values[1];
         float sensorZ = event.values[2];
 
+
         if(checkTheConditions(sensorX,sensorY,sensorZ)){
 
-
+            Log.i("pegou","marcou em casa");
 
             if (ContextCompat.checkSelfPermission(
                     this,
@@ -227,9 +227,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    protected void initHole(LatLng latLng){
-        mMap.addMarker(new MarkerOptions().position(latLng).
-                icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
+    protected void initHole(ArrayList<LatLng> holes){
+
+        for (int i = 0; i < holes.size(); i++ ){
+            mMap.addMarker(new MarkerOptions().position(holes.get(i)).
+                    icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
+        }
     }
 
     @Override
