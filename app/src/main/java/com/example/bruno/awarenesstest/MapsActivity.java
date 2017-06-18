@@ -38,25 +38,30 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, SensorEventListener {
 
+
+    //    private static final String FENCE_RECEIVER_ACTION = "FENCE_RECEIVE";
+    //    private static String textHole = "Cuidado com o buraco!";
+    //    private Toast t;
+    //    private Context context = getApplicationContext();
+    //    private HeadphoneFenceBroadcastReceiver fenceReceiver;
+    //    private PendingIntent mFencePendingIntent;
     private GoogleMap mMap;
     private GoogleApiClient mClient;
-    //    private Toast t;
-//    private Context context = getApplicationContext();
-    private static String textHole = "Cuidado com o buraco!";
-    private static final int TIPO_SENSOR = Sensor.TYPE_ACCELEROMETER;
-    private SensorManager sensorManager;
     private Sensor sensor;
+    private SensorManager sensorManager;
     private static double SENSIBILIDADE_SENSOR_X = 1.2;
     private static double SENSIBILIDADE_SENSOR_Y = 1.5;
     private static double MIN_SENSOR_Z = 8;
     private static double MAX_SENSOR_Z = 12;
-    private static int atividade = DetectedActivity.UNKNOWN; // INICIALIZA COM O PADRAO INDEFINIDO
     private static String TAG = "Awareness";
-    private static final String FENCE_RECEIVER_ACTION = "FENCE_RECEIVE";
-//    private HeadphoneFenceBroadcastReceiver fenceReceiver;
-//    private PendingIntent mFencePendingIntent;
+    private static final int TIPO_SENSOR = Sensor.TYPE_ACCELEROMETER;
+    private static int atividade = DetectedActivity.UNKNOWN;
+
+    private ArrayList<LatLng> holes = new ArrayList<LatLng>();
 
 
     @Override
@@ -81,6 +86,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .build();
         mClient.connect();
 
+        holes.add(new LatLng(-8.191051, -34.921126));
+
         Log.i(TAG, "onCreate");
     }
 
@@ -90,23 +97,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         LatLng casaDoCriador = new LatLng(-8.14049705, -34.90979254);
         LatLng unicap = new LatLng(-8.05557534, -34.88822222);
-//        LatLng lugar = new LatLng(-8.153492,-34.92);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+        //RUNTIME PERMISSIONS PARA LOCALIZAÇAO
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+
             return;
         }
         mMap.setMyLocationEnabled(true);
-        mMap.addMarker(new MarkerOptions().position(casaDoCriador).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
-        mMap.addMarker(new MarkerOptions().position(unicap).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
 
-//        mMap.addMarker(new MarkerOptions().position(lugar).title("Aqui o lugar misterioso!"));
+        //MARCANDO LOCAIS INDICADOS COM BURACOS
+        for (int i = 0; i < holes.size(); i++ ){
+            initHole(holes.get(i));
+        }
+
+        mMap.addMarker(new MarkerOptions().position(casaDoCriador).
+                icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
+        mMap.addMarker(new MarkerOptions().position(unicap).
+                icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
+
         mMap.moveCamera(CameraUpdateFactory.newLatLng(casaDoCriador));
 
     }
@@ -213,6 +225,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         return false;
 
+    }
+
+    protected void initHole(LatLng latLng){
+        mMap.addMarker(new MarkerOptions().position(latLng).
+                icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
     }
 
     @Override
