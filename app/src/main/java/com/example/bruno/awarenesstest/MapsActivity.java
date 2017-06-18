@@ -18,6 +18,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.awareness.snapshot.DetectedActivityResult;
 import com.google.android.gms.awareness.snapshot.LocationResult;
 import com.google.android.gms.awareness.snapshot.WeatherResult;
 import com.google.android.gms.awareness.state.Weather;
@@ -25,6 +26,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.awareness.Awareness;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.ActivityRecognition;
+import com.google.android.gms.location.ActivityRecognitionResult;
+import com.google.android.gms.location.DetectedActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -48,6 +51,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static double SENSIBILIDADE_SENSOR_Y = 1.5;
     private static double MIN_SENSOR_Z = 8;
     private static double MAX_SENSOR_Z = 12;
+    private static int atividade = DetectedActivity.UNKNOWN; // INICIALIZA COM O PADRAO INDEFINIDO
     private static String TAG = "Awareness";
 
     @Override
@@ -107,11 +111,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    public void onRequestPermissionsResult(){
-
-    }
-
-
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         Log.i("teste", "Conected on API Awareness!");
@@ -154,11 +153,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if(checkTheConditions(sensorX,sensorY,sensorZ)){
 
-            CharSequence text = "Buraco!";
-            Toast t = Toast.makeText( getApplicationContext(), text, Toast.LENGTH_SHORT);
-            t.show();
 
-            Log.i("teste","Buraco detectado!");
 
             if (ContextCompat.checkSelfPermission(
                     this,
@@ -171,6 +166,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 );
             }
 
+            Awareness.SnapshotApi.getDetectedActivity(mClient)
+                    .setResultCallback(new ResultCallback<DetectedActivityResult>() {
+                        @Override
+                        public void onResult(@NonNull DetectedActivityResult detectedActivityResult) {
+                            if (!detectedActivityResult.getStatus().isSuccess()) {
+                                Log.e(TAG, "Could not get the current activity.");
+                                return;
+                            }
+                            ActivityRecognitionResult ar = detectedActivityResult.getActivityRecognitionResult();
+                            atividade = ar.getMostProbableActivity().getType();
+                        }
+                    });
+
 
             // UMA VEZ DETECTADO UM BURACO, ESTE DEVE SER SALVO
             Awareness.SnapshotApi.getLocation(mClient)
@@ -182,8 +190,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 Log.e(TAG, "Could not get location.");
                                 return;
                             }
-                            Location location = locationResult.getLocation();
-                            Log.i(TAG, "Lat: " + location.getLatitude() + ", Lon: " + location.getLongitude());
+                            else if(atividade == DetectedActivity.IN_VEHICLE){
+
+                                CharSequence text = "Buraco!";
+                                Toast t = Toast.makeText( getApplicationContext(), text, Toast.LENGTH_SHORT);
+                                t.show();
+
+                                Log.i("teste","Buraco detectado!");
+                                Location location = locationResult.getLocation();
+                                Log.i(TAG, String.valueOf(atividade));
+                                Log.i(TAG, "Lat: " + location.getLatitude() + ", Lon: " + location.getLongitude());
+                            }
+                            else{
+                                Log.i(TAG, String.valueOf(atividade));
+                                Log.i(TAG,"foi detectado um buraco, mas foi ignorado pelo contexto");
+                            }
+
+
                         }
                     });
         }
