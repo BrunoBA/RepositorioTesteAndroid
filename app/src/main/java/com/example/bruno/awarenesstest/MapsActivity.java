@@ -3,6 +3,7 @@ package com.example.bruno.awarenesstest;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -28,6 +29,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -94,8 +97,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         mMap.setMyLocationEnabled(true);
-        mMap.addMarker(new MarkerOptions().position(casaDoCriador).title(textHole));
-        mMap.addMarker(new MarkerOptions().position(unicap).title(textHole));
+        mMap.addMarker(new MarkerOptions().position(casaDoCriador).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
+        mMap.addMarker(new MarkerOptions().position(unicap).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
 
 
 //        mMap.addMarker(new MarkerOptions().position(lugar).title("Aqui o lugar misterioso!"));
@@ -156,6 +159,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             t.show();
 
             Log.i("teste","Buraco detectado!");
+
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION) !=
+                    PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        12345
+                );
+            }
+
 
             // UMA VEZ DETECTADO UM BURACO, ESTE DEVE SER SALVO
             Awareness.SnapshotApi.getLocation(mClient)

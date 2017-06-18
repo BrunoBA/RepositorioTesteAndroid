@@ -57,6 +57,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/bruno/AndroidStudioProjects/RepositorioTesteAndroid/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="/Users/bruno/AndroidStudioProjects/RepositorioTesteAndroid/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_d2c6ff5e265520c01a0ec6601ef1a8f4f8474166/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/bruno/.android/build-cache/0d74a6724d5634d5c51526e3fb0ff01284e91e76/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
@@ -117,6 +126,15 @@
         revision="25.0.0"
         sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
         <dex dex="/Users/bruno/AndroidStudioProjects/AwarenessTest/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_2618ab9d2ba9f5a2f24b7c2c4f1c5442ee711b3e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/bruno/AndroidStudioProjects/RepositorioTesteAndroid/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="79dfaf786379a25196bd7caf90676e815df0df16">
+        <dex dex="/Users/bruno/AndroidStudioProjects/RepositorioTesteAndroid/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_eb32a70da85b05e8446ef4acfc77908e4d08d0dd/classes.dex" />
     </item>
     <item
         is-multidex="true"
