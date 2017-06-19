@@ -99,6 +99,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mClient.connect();
 
         //Inicializar valores dos buracos via banco de dados
+
         holes.add(new LatLng(-8.191051, -34.921126));
 
         Log.i(TAG, "onCreate");
@@ -186,10 +187,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 });
 
-
+        //&& mFenceReceiver.getOnDriving() TODO:: INCLUIR NO MÉTODO DE NIVELAMENTO DE SENSOR
         if(checkTheConditions(sensorX,sensorY,sensorZ)){
-
-            Log.i("pegou","marcou em casa");
 
             if (ContextCompat.checkSelfPermission(
                     this,
@@ -227,6 +226,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 return;
                             }
 
+                            // CASO CHEGUE ATÉ ESTA POSIÇAO SIGNIFICA QUE ESTÁ EM MOVIMENTO, NESTE CASO
+                            //É PEGO UM SANPSHOT DO EXATO MOMENTO QUE ISSO ACONTECE A FINS DE CORREÇ˜AO DE GPS
 
                             else if(atividade == IN_VEHICLE){
 
@@ -253,6 +254,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //METODO FEITO PARA IDENTIFICAR SE HOUVE A DETECÇAO DE UM BURACO
     private boolean checkTheConditions(float x, float y, float z){
 
+        // FATORES DE CORREÇAO PARA O UM DISPOSITIVO QUE ESTÁ DE FORMA HORIZONTAL ( PRA CIMA OU PARA
+        // BAIXO
+
         if(x > SENSIBILIDADE_SENSOR_X && y > SENSIBILIDADE_SENSOR_Y &&
                 (MAX_SENSOR_Z > z &&  z < MIN_SENSOR_Z) ||
                 (-MAX_SENSOR_Z > z &&  z < -MIN_SENSOR_Z)){
@@ -264,6 +268,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     protected void initHole(ArrayList<LatLng> holes){
 
+        // MARCA TODOS OS BURACOS QUE ESTAO SALVOS NO ARRAY
         for (int i = 0; i < holes.size(); i++ ){
             mMap.addMarker(new MarkerOptions().position(holes.get(i)).
                     icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
