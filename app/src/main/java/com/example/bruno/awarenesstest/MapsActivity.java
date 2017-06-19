@@ -3,6 +3,7 @@ package com.example.bruno.awarenesstest;
 import android.Manifest;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.hardware.Sensor;
@@ -19,6 +20,9 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.awareness.fence.AwarenessFence;
+import com.google.android.gms.awareness.fence.DetectedActivityFence;
+import com.google.android.gms.awareness.fence.FenceUpdateRequest;
 import com.google.android.gms.awareness.snapshot.DetectedActivityResult;
 import com.google.android.gms.awareness.snapshot.LocationResult;
 import com.google.android.gms.awareness.snapshot.WeatherResult;
@@ -26,6 +30,7 @@ import com.google.android.gms.awareness.state.Weather;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.awareness.Awareness;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.ActivityRecognition;
 import com.google.android.gms.location.ActivityRecognitionResult;
 import com.google.android.gms.location.DetectedActivity;
@@ -39,6 +44,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+
+import static com.google.android.gms.location.DetectedActivity.IN_VEHICLE;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, SensorEventListener {
 
@@ -60,9 +67,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static String TAG = "Awareness";
     private static final int TIPO_SENSOR = Sensor.TYPE_ACCELEROMETER;
     private static int atividade = DetectedActivity.UNKNOWN;
-
     private ArrayList<LatLng> holes = new ArrayList<LatLng>();
 
+    private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 10001;
+    private static final String MY_FENCE_RECEIVER_ACTION = "MY_FENCE_ACTION";
+    public static final String DRIVING_FENCE_KEY = "DrivingFenceKey";
+    private static final int IN_VEHICLE = 0;
+
+    private FenceBroadcastReceiver mFenceReceiver = new FenceBroadcastReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +163,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         float sensorY = event.values[1];
         float sensorZ = event.values[2];
 
+        Intent intent = new Intent(MY_FENCE_RECEIVER_ACTION);
+        PendingIntent mFencePendingIntent = PendingIntent.getBroadcast(MapsActivity.this,
+                10001,
+                intent,
+                0);
+
+        AwarenessFence driveFence = DetectedActivityFence.during(	IN_VEHICLE   );
+        Awareness.FenceApi.updateFences(
+                mClient,
+                new FenceUpdateRequest.Builder()
+                        .addFence(DRIVING_FENCE_KEY, driveFence, mFencePendingIntent)
+                        .build())
+                .setResultCallback(new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(@NonNull Status status) {
+                        if (status.isSuccess()) {
+                            Log.i(TAG, "Fence was successfully registered.");
+                        } else {
+                            Log.e(TAG, "Fence could not be registered: " + status);
+                        }
+                    }
+                });
+
 
         if(checkTheConditions(sensorX,sensorY,sensorZ)){
 
@@ -193,7 +228,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             }
 
 
-                            else if(atividade == DetectedActivity.IN_VEHICLE){
+                            else if(atividade == IN_VEHICLE){
 
                                 CharSequence text = "Buraco!";
                                 Toast t = Toast.makeText( getApplicationContext(), text, Toast.LENGTH_SHORT);
@@ -239,4 +274,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
+
+    private void addDriverFence() {
+        Intent intent = new Intent(MY_FENCE_RECEIVER_ACTION);
+        PendingIntent mFencePendingIntent = PendingIntent.getBroadcast(MapsActivity.this,
+                10001,
+                intent,
+                0);
+
+        AwarenessFence driveFence = DetectedActivityFence.during(	IN_VEHICLE   );
+        Awareness.FenceApi.updateFences(
+                mClient,
+                new FenceUpdateRequest.Builder()
+                        .addFence(DRIVING_FENCE_KEY, driveFence, mFencePendingIntent)
+                        .build())
+                .setResultCallback(new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(@NonNull Status status) {
+                        if (status.isSuccess()) {
+                            Log.i(TAG, "Fence was successfully registered.");
+                        } else {
+                            Log.e(TAG, "Fence could not be registered: " + status);
+                        }
+                    }
+                });
+
+        Context context = getApplicationContext();
+        CharSequence text = "";
+        if(mFenceReceiver.getOnDriving()){
+            text = "DRIVING ON";
+        }else{
+            text = "DRIVING OFF";
+        }
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+    }
 }
+
